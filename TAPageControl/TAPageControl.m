@@ -151,7 +151,7 @@ static CGSize const kDefaultDotSize = {8, 8};
         if (i < self.dots.count) {
             dot = [self.dots objectAtIndex:i];
         } else {
-            dot = [self generateDotView];
+            dot = [self generateDotView:i];
         }
         
         [self updateDotFrame:dot atIndex:i];
@@ -209,11 +209,14 @@ static CGSize const kDefaultDotSize = {8, 8};
  *
  *  @return The UIView object representing a dot
  */
-- (UIView *)generateDotView
+- (UIView *)generateDotView:(int)index
 {
     UIView *dotView;
+    ResolveViewBlock resolveViewBlock = self.resolveViewBlock;
     
-    if (self.dotViewClass) {
+    if (resolveViewBlock) {
+        dotView = resolveViewBlock(index);
+    } else if (self.dotViewClass) {
         dotView = [[self.dotViewClass alloc] initWithFrame:CGRectMake(0, 0, self.dotSize.width, self.dotSize.height)];
     } else {
         dotView = [[UIImageView alloc] initWithImage:self.dotImage];

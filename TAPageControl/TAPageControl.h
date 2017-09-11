@@ -10,9 +10,18 @@
 
 @protocol TAPageControlDelegate;
 
+typedef UIView * (^ResolveViewBlock)(int);
 
 @interface TAPageControl : UIControl
 
+/**
+ * Dot view customization properties
+ */
+
+/**
+ *  The Class of your custom UIView, make sure to respect the TAAbstractDotView class.
+ */
+@property (nonatomic) ResolveViewBlock resolveViewBlock;
 
 /**
  * Dot view customization properties
