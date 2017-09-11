@@ -151,7 +151,7 @@ static CGSize const kDefaultDotSize = {8, 8};
         if (i < self.dots.count) {
             dot = [self.dots objectAtIndex:i];
         } else {
-            dot = [self generateDotView:i];
+            dot = [self generateDotView:(int) i];
         }
         
         [self updateDotFrame:dot atIndex:i];
