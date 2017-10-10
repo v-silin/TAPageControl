@@ -216,6 +216,7 @@ static CGSize const kDefaultDotSize = {8, 8};
     
     if (resolveViewBlock) {
         dotView = resolveViewBlock(index);
+        dotView.frame = CGRectMake(0, 0, self.dotSize.width, self.dotSize.height);
     } else if (self.dotViewClass) {
         dotView = [[self.dotViewClass alloc] initWithFrame:CGRectMake(0, 0, self.dotSize.width, self.dotSize.height)];
     } else {
@@ -242,7 +243,7 @@ static CGSize const kDefaultDotSize = {8, 8};
  */
 - (void)changeActivity:(BOOL)active atIndex:(NSInteger)index
 {
-    if (self.dotViewClass) {
+    if (self.resolveViewBlock || self.dotViewClass) {
         TAAbstractDotView *abstractDotView = (TAAbstractDotView *)[self.dots objectAtIndex:index];
         if ([abstractDotView respondsToSelector:@selector(changeActivityState:)]) {
             [abstractDotView changeActivityState:active];
@@ -335,6 +336,11 @@ static CGSize const kDefaultDotSize = {8, 8};
     [self resetDotViews];
 }
 
+- (void)setResolveViewBlock:(ResolveViewBlock)resolveViewBlock
+{
+    _resolveViewBlock = resolveViewBlock;
+    [self resetDotViews];
+}
 
 #pragma mark - Getters
 
